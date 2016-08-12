@@ -1,18 +1,18 @@
+##
 ## DESCRIPTION:
-## This TCL script is a simple method to visualize path integrals through VMD from both a PDB and NC file, while producing values for centre of mass. The visualization of each molecule can be changed in terms of its colour, representation type, selection method (e.g. residue type, index, element, xyz coordinates, etc.), and material. The calculated centre of masses replaces the xyz coordinates of each first bead of each atom, which is connected visually. Colouring of atoms are based on standard CPK rules.
-
-HI
-
+## This TCL script is a simple method to visualize path integrals through VMD from a PDB and NC file, while producing values for centre of mass. The visualization of each molecule can be changed in terms of its colour, representation type, selection method, and material. The calculated centre of masses replaces the xyz coordinates of each original first bead of each atom, which is connected visually. Colouring of atoms are based on standard CPK rules.
+##
 ## PROCEDURES:
 ## colorset
-
+##
 ## EXAMPLE USAGE (WITHOUT VMD MAIN WINDOW & TK CONSOLE ACCESS):
 ## vmd -f nameofpdbfile.pdb -f nameofncfile.nc -startup colorset.tcl
-
+##
 ## EXAMPLE USAGE (WITH VMD MAIN WINDOW & TK CONSOLE ACCESS):
 ## vmd -f nameofpdbfile.pdb -f nameofncfile.nc
 ## Then open Tk Console from Extensions dropdown menu and type in
 ## source colorset.tcl
+## 
 
 proc colorset {} { 
     # Colours: 0=blue; 1=red; 2=gray; 3=orange; 4=yellow; 5=tan; 6=silver; 7=green; 8=white; 9=pink; 10=cyan; 11=purple; 12=lime; 13=mauve; 14=ochre; 15=iceblue; 16=black; 17=yellow2; 18=yellow3; 19=green2; 20=green3; 21=cyan2; 22=cyan3; 23=blue2; 24=blue3; 25=violet; 26=violet2; 27=magenta; 28=magenta2; 29=red2; 30=red3; 31=orange2; 32=orange3 
@@ -28,11 +28,11 @@ proc colorset {} {
     # Can change background display colour:
     color Display Background 2
 
-    ## 0, 1, 2 placed after modselect are the representation numbers                       
-    ## "top" is the id of the top molecule or molecule number, can often refer to molID instead 
+    # 0, 1, 2 placed after modselect are the representation numbers                       
+    # "top" is the id of the top molecule or molecule number, can often refer to molID instead 
 
-    # First molecule (pdb file) will have molID 0
-    # Second molecule (nc file) will have molID 1
+    # First molecule (pdb file) will have molID of 0
+    # Second molecule (nc file) will have molID of 1
     
     # Note: Ensure that pdb file is in alphabetical order
 
@@ -44,7 +44,7 @@ proc colorset {} {
     set numpdb [molinfo 0 get numatoms]
     set numnc [molinfo 1 get numatoms]
     
-    # Hide pdb file: (not necessary to show pdb file) (Format: mol off molID)
+    # Hide pdb file: (is not necessary to show pdb file) (Format: mol off molID)
     mol off 0
     
     # Get the number of beads per atom
@@ -52,7 +52,7 @@ proc colorset {} {
     
     # Set representation for pdb molecule:
     # To adjust size of chosen representation, default settings chosen if no values given after name of representation; otherwise add values for scaling, thickness, etc. (Format: mol representation NameofRepresentation OptionalValues)
-    # Change coloring method (Format: mol color ColourMethod)
+    # Change coloring method (Format: mol color ColouringMethod)
     # Apply modifications (Format: mol modrep RepresentationNumber MoleculeNumber)
     mol representation Lines
     mol color Name
@@ -89,7 +89,7 @@ proc colorset {} {
     set sulfur [atomselect 0 "element S"]
     set numS [$sulfur num]
 
-    # Change colouring method and representation of nc molecule (when using ColorID as ColouringMethod, add value of colour afterwards to adjust)
+    # Change colouring method and representation of molecule from nc file (when using ColorID as ColouringMethod, add value of colour afterwards to adjust)
     # Colour the beads according to standard CPK rules
     # Let n be a counter for RepresentationNumber of nc file
     # Let prev be the current number of beads so far
@@ -213,7 +213,7 @@ proc colorset {} {
     set sellist [lreplace $sel [expr [llength $sel]-1] [expr [llength $sel]-1]]
     set sellist [linsert $sellist [llength $sellist] ")"]
     
-    # Set colouring and representation type in a new representation                                  
+    # Set colouring and representation type for connection between centre of masses                                  
     mol color ColorID 12
     mol representation DynamicBonds 1.6 0.1 12.0
     mol material Transparent
