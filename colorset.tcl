@@ -1,6 +1,8 @@
 ## DESCRIPTION:
 ## This TCL script is a simple method to visualize path integrals through VMD from both a PDB and NC file, while producing values for centre of mass. The visualization of each molecule can be changed in terms of its colour, representation type, selection method (e.g. residue type, index, element, xyz coordinates, etc.), and material. The calculated centre of masses replaces the xyz coordinates of each first bead of each atom, which is connected visually. Colouring of atoms are based on standard CPK rules.
 
+HI
+
 ## PROCEDURES:
 ## colorset
 
